@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/listview_images"
         android:layout_width="fill_parent"
-        android:layout_height="305dp"
+        android:layout_height="511dp"
         android:padding="10dp" />
 
     <TextView

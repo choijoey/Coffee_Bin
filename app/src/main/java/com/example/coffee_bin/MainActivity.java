@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         Button mapBtn = findViewById(R.id.map_btn);
         Button volumeBtn = findViewById(R.id.volume_btn);
         Button pointCheckBtn = findViewById(R.id.point_check_btn);
-        Button userCheckBtn = findViewById(R.id.user_check_btn);
 
 
 

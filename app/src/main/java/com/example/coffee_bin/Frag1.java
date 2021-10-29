@@ -34,7 +34,7 @@ public class Frag1 extends Fragment{
                 "20","49","99"
         };
         int[] ListviewImages= new int[]{
-                R.drawable.trashcan_1,R.drawable.trashcan_2,R.drawable.trashcan_3
+                R.drawable.plastic_volume1,R.drawable.plastic_volume2,R.drawable.plastic_volume3
         };
         List <HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
 

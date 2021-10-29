@@ -24,7 +24,6 @@ public class TrashcanvolumeActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private Frag1 frag1;
     private Frag2 frag2;
-    private Frag3 frag3;
 
 
     @Override
@@ -44,20 +43,15 @@ public class TrashcanvolumeActivity extends AppCompatActivity {
                     case R.id.action_plastic:
                         setFrag(0);
                         break;
-                    case R.id.action_water:
+                    case R.id.action_paper:
                         setFrag(1);
                         break;
-                    case R.id.action_paper:
-                        setFrag(2);
-                        break;
-
                 }
                 return false;
         }
   });
         frag1= new Frag1();
         frag2= new Frag2();
-        frag3= new Frag3();
         setFrag(0); //첫 화면은 frag1
     }
 
@@ -73,10 +67,6 @@ public class TrashcanvolumeActivity extends AppCompatActivity {
                 ft.replace(R.id.main_frame, frag2);
                 ft.commit();
                 break;
-            case 2:
-            ft.replace(R.id.main_frame, frag3);
-            ft.commit();
-            break;
         }
     }
 }

@@ -23,6 +23,11 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationResult;
@@ -30,11 +35,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,13 +50,25 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private FragmentManager fragmentManager;
     private MapFragment mapFragment;
+    public GoogleMap mMap;
+    // 받을 위도 경도값
+    double pointX[]={37.39180718331199,37.39338852171473, 37.38935401540017};
+    double pointY[]={126.65054524412689,126.64819762346761,126.65118318449554};
+    public static final CameraPosition SYDNEY =
+            new CameraPosition.Builder().target(new LatLng(-33.87365, 151.20689))
+                    .zoom(15.5f)
+                    .bearing(0)
+                    .tilt(25)
+                    .build();
+    public List<LatLng> points=new ArrayList<LatLng>();
 
-
+    private int mCurrentAnimationIndex = -1;
 
     FusedLocationProviderClient client;
     LocationRequest locationRequest;
@@ -67,15 +86,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
+                        mMap=googleMap;
                         //경도 위도 초기화
                         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                         //마커 만들기
                         MarkerOptions options = new MarkerOptions().position(latLng).title("현재 위치");
                         //지도 줌
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));//가까이 보고싶으면 숫자 올리면되고 멀리 보고싶으면 숫자 내리면됨
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,21));//가까이 보고싶으면 숫자 올리면되고 멀리 보고싶으면 숫자 내리면됨
                         //
                         googleMap.clear();
+
                         googleMap.addMarker(options);
+                        int x=0;
+                        for(LatLng point : points){
+                            options = new MarkerOptions().position(point).title("쓰레기통"+(x+1));
+                            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                            googleMap.addMarker(options);
+                            x++;
+                        }
 
                     }
                 });
@@ -87,6 +115,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        for (int i = 0 ; i < pointX.length; i++){
+            points.add(new LatLng(pointX[i],pointY[i]));
+        };
+
+
         setContentView(R.layout.activity_map);
 
         fragmentManager = getFragmentManager();
@@ -95,8 +130,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         locationRequest = LocationRequest.create();
-        locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(2000);
+        locationRequest.setInterval(8000);
+        locationRequest.setFastestInterval(4000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
@@ -107,8 +142,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //위치 허락 받았다면
             //getCurrentLocation();
+
             checkSettingAndStartLocationUpdates();
         }
+    }
+
+    //옵션 메뉴를 구성하기 위해 호출되는 메서드
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.map_menu,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    //메뉴 클릭 시 수행
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //사용자가 선택한 메뉴의 id값 추출
+        int id = item.getItemId();
+        mMap.stopAnimation();
+
+        switch (id){
+
+            case R.id.item1:
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.39180718331199,126.65054524412689),20));
+                break;
+            case R.id.item2:
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[1],pointY[1]),20));
+                break;
+            case R.id.item3:
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[2],pointY[2]),20));
+                break;
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
