@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".KakaoLoginActivity">
 
+
+    <com.kakao.usermgmt.LoginButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-26dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

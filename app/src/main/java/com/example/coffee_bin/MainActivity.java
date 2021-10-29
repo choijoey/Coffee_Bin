@@ -7,23 +7,58 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+
 public class MainActivity extends AppCompatActivity {
 
+    private String strEmail;
+    private String phoneNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
 
+
+
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        strEmail=intent.getStringExtra("email");
+        phoneNum= intent.getStringExtra("phoneNum");
+        TextView tv_email=findViewById(R.id.tv_email);
+        TextView tv_phoneNum=findViewById(R.id.tv_phoneNum);
+        tv_email.setText(strEmail);
+        tv_phoneNum.setText(phoneNum);
+
+        findViewById(R.id.btn_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                    @Override
+                    public void onCompleteLogout() {
+                        // 로그아웃 성공 시 수행하는 지점
+                        finish();
+
+                    }
+                });
+            }
+        });
+
 
         Button mapBtn = findViewById(R.id.map_btn);
         Button volumeBtn = findViewById(R.id.volume_btn);
         Button pointCheckBtn = findViewById(R.id.point_check_btn);
         Button userCheckBtn = findViewById(R.id.user_check_btn);
+
+
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -73,14 +108,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //유저 관리 화면으로 전환
-        userCheckBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UserCheckActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
 
 
