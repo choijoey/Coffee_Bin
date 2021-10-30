@@ -92,7 +92,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         //마커 만들기
                         MarkerOptions options = new MarkerOptions().position(latLng).title("현재 위치");
                         //지도 줌
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,21));//가까이 보고싶으면 숫자 올리면되고 멀리 보고싶으면 숫자 내리면됨
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,18));//가까이 보고싶으면 숫자 올리면되고 멀리 보고싶으면 숫자 내리면됨
                         //
                         googleMap.clear();
 
@@ -166,14 +166,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             case R.id.item1:
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.39180718331199,126.65054524412689),20));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[0],pointY[0]),18));
                 break;
             case R.id.item2:
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[1],pointY[1]),20));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[1],pointY[1]),18));
                 break;
             case R.id.item3:
 
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[2],pointY[2]),20));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(pointX[2],pointY[2]),18));
                 break;
         }
 

@@ -101,11 +101,12 @@ public class KakaoLoginActivity extends AppCompatActivity {
                         //로그인 성공
                         Intent intent = new Intent(KakaoLoginActivity.this,MainActivity.class);
                         //이동할 activity
+                        intent.putExtra("name",result.getKakaoAccount().getProfile().getNickname());
                         intent.putExtra("email",result.getKakaoAccount().getEmail());
                         intent.putExtra("phoneNum",PhoneNum);
                         startActivity(intent);
 
-                        Toast.makeText(KakaoLoginActivity.this, "환영합니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(KakaoLoginActivity.this, "환영합니다!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

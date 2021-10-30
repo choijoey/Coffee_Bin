@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String strEmail;
     private String phoneNum;
+    private String nickName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -32,11 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         strEmail=intent.getStringExtra("email");
+        nickName=intent.getStringExtra("name");
         phoneNum= intent.getStringExtra("phoneNum");
         TextView tv_email=findViewById(R.id.tv_email);
         TextView tv_phoneNum=findViewById(R.id.tv_phoneNum);
+        TextView tv_nickname=findViewById(R.id.tv_nickname);
+
         tv_email.setText(strEmail);
         tv_phoneNum.setText(phoneNum);
+        tv_nickname.setText(nickName);
 
         findViewById(R.id.btn_logout).setOnClickListener(new View.OnClickListener() {
             @Override
