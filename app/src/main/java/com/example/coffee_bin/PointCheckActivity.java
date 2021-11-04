@@ -19,6 +19,8 @@ public class PointCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_point_check);
 
+
+
         noticeListView = (ListView) findViewById((R.id.point_listView));
         noticeList=new ArrayList<Notice>();
         noticeList.add(new Notice("적립 내역 안내","+30","2021-10-30"));
