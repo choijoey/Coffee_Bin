@@ -3,8 +3,12 @@ package com.example.coffee_bin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,11 +20,22 @@ import com.gun0912.tedpermission.TedPermission;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import android.provider.Settings.Secure;
+
 public class MainActivity extends AppCompatActivity {
 
     private String strEmail;
     private String phoneNum;
     private String nickName;
+    private String serial;
+
+    TextView tv_email;
+    TextView tv_serialNum;
+    ApiInterface api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +43,28 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        TelephonyManager tm =
+                (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        serial = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
+        //https://stackoverflow.com/questions/4799394/is-secure-android-id-unique-for-each-device
+
+
+        //api 생성
+        api = HttpClient.getRetrofit().create( ApiInterface.class );
 
 
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        strEmail=intent.getStringExtra("email");
+        //strEmail=intent.getStringExtra("email");
         nickName=intent.getStringExtra("name");
         phoneNum= intent.getStringExtra("phoneNum");
-        TextView tv_email=findViewById(R.id.tv_email);
+         tv_email=findViewById(R.id.tv_email);
         TextView tv_phoneNum=findViewById(R.id.tv_phoneNum);
         TextView tv_nickname=findViewById(R.id.tv_nickname);
-
-        tv_email.setText(strEmail);
+        tv_serialNum=findViewById(R.id.tv_serialNum);
+        //tv_email.setText(strEmail);
+        tv_serialNum.setText(serial);
         tv_phoneNum.setText(phoneNum);
         tv_nickname.setText(nickName);
 
@@ -57,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        // 서버에 데이터 전송 ,토큰 값 받아오기
+        requestPost();
 
 
         Button mapBtn = findViewById(R.id.map_btn);
@@ -118,6 +145,36 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    // POST 통신요청
+    public void requestPost() {
+
+        ReqLoginData reqLoginData = new ReqLoginData( phone_format(phoneNum),serial);
+
+        Call<ResLoginData> call = api.requestPostLogin( reqLoginData );
+
+        Log.d("TEST","requestPost 전");
+        call.enqueue( new Callback<ResLoginData>() {
+            // 통신성공 후 텍스트뷰에 결과값 출력
+
+            @Override
+            public void onResponse(Call<ResLoginData> call, Response<ResLoginData> response) {
+                Log.d("TEST","onResponse 전");
+                System.out.println("dddddddddddddd"+response.body());
+                tv_email.setText( response.body().toString() );    // body() - API 결과값을 객체에 맵핑
+                Log.d("TEST","onResponse 후");
+            }
+
+            @Override
+            public void onFailure(Call<ResLoginData> call, Throwable t) {
+                tv_email.setText( "onFailure" );
+                Log.d("TEST","로그찍어봄",t);
+            }
+        } );
+    }
+
+    public String phone_format(String number) {
+        String regEx = "(\\d{3})(\\d{3,4})(\\d{4})"; return number.replaceAll(regEx, "$1-$2-$3"); }
 
 
 }
