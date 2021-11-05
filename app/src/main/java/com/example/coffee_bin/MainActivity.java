@@ -28,14 +28,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import android.provider.Settings.Secure;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
-    private String strEmail;
+    private String email;
     private String phoneNum;
     private String nickName;
     private String serial;
-
-    TextView tv_email;
+    TextView tv_nickName;
     //TextView tv_serialNum;
     ApiInterface api;
 
@@ -61,11 +62,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        strEmail=intent.getStringExtra("email");
+        email=intent.getStringExtra("email");
         nickName=intent.getStringExtra("name");
         phoneNum= intent.getStringExtra("phoneNum");
 
-
+        tv_nickName=findViewById(R.id.tv_nickName);
+        tv_nickName.setText(nickName+" 님 환영합니다!");
         findViewById(R.id.btn_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     // POST 통신요청
     public void requestPost() {
 
-        ReqLoginData reqLoginData = new ReqLoginData( phone_format(phoneNum),strEmail);
+        ReqLoginData reqLoginData = new ReqLoginData( phone_format(phoneNum),email);
 
         Call<ResLoginData> call = api.requestPostLogin( reqLoginData );
 
