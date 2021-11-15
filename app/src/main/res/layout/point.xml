@@ -16,7 +16,7 @@
         android:drawableStart="@drawable/ic_baseline_sms_24"
         android:drawableLeft="@drawable/ic_baseline_sms_24"
         android:padding="10dp"
-        android:text="적립 날짜"
+        android:text="+30"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:padding="3dp"
-            android:text="+20"></TextView>
+            android:text="날짜"></TextView>
 
     </LinearLayout>
 
