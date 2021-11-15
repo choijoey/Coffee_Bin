@@ -28,6 +28,14 @@ public class Frag2 extends Fragment {
         String[] ListviewDescription = new String[]{
                 "99","20","66"
         };
+        Bundle bundle=getArguments();
+        if(bundle!= null){
+            ListviewTitle = getArguments().getStringArray("name");
+            ListviewDescription = getArguments().getStringArray("paper_amount");
+        }
+
+
+
         int[] ListviewImages= new int[]{
                 R.drawable.paper_volume1,R.drawable.paper_volume2,R.drawable.paper_volume3
         };
@@ -47,9 +55,9 @@ public class Frag2 extends Fragment {
             HashMap<String,String> hm = new HashMap<String,String>();
             hm.put("ListTitle",ListviewTitle[x]);
             hm.put("ListDescription",ListviewDescription[x]);
-            if(Integer.parseInt(ListviewDescription[x])<25){
+            if(Integer.parseInt(ListviewDescription[x])<20){
                 hm.put("ListImages",Integer.toString(ListviewImages[0]));
-            }else if(Integer.parseInt(ListviewDescription[x])<50){
+            }else if(Integer.parseInt(ListviewDescription[x])<40){
                 hm.put("ListImages",Integer.toString(ListviewImages[1]));
             }
             else{

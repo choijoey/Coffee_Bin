@@ -3,15 +3,10 @@ package com.example.coffee_bin;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,10 +20,6 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import android.provider.Settings.Secure;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
     private String phoneNum;
     private String nickName;
     private String serial;
+    private String token;
     TextView tv_nickName;
     //TextView tv_serialNum;
-    ApiInterface api;
+    ApiInterfaceLogin api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
 
         //api 생성
-        api = HttpClient.getRetrofit().create( ApiInterface.class );
+        api = HttpClient.getRetrofit().create( ApiInterfaceLogin.class );
 
 
         setContentView(R.layout.activity_main);
@@ -119,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                intent.putExtra("token",token);
                 startActivity(intent);
             }
         });
@@ -127,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, TrashcanvolumeActivity.class);
+                intent.putExtra("token",token);
                 startActivity(intent);
             }
         });
@@ -136,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, PointCheckActivity.class);
+                intent.putExtra("token",token);
                 startActivity(intent);
             }
         });
@@ -153,22 +148,18 @@ public class MainActivity extends AppCompatActivity {
 
         Call<ResLoginData> call = api.requestPostLogin( reqLoginData );
 
-        Log.d("TEST","requestPost 전");
         call.enqueue( new Callback<ResLoginData>() {
             // 통신성공 후 텍스트뷰에 결과값 출력
 
             @Override
             public void onResponse(Call<ResLoginData> call, Response<ResLoginData> response) {
-                Log.d("TEST","onResponse 전");
-                System.out.println("dddddddddddddd"+response.body());
+                token=response.body().toString();
                 //tv_email.setText( response.body().toString() );    // body() - API 결과값을 객체에 맵핑
-                Log.d("TEST","onResponse 후");
             }
 
             @Override
             public void onFailure(Call<ResLoginData> call, Throwable t) {
                 //tv_email.setText( "onFailure" );
-                Log.d("TEST","로그찍어봄",t);
             }
         } );
     }

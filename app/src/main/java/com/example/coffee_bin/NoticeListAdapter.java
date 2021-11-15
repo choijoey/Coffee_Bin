@@ -37,15 +37,13 @@ public class NoticeListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.point,null);
-        TextView pointText = (TextView) v.findViewById(R.id.pointTitle);
+
         TextView dateText = (TextView) v.findViewById(R.id.dateText);
         TextView pointSize = (TextView) v.findViewById(R.id.pointSize);
 
-        pointText.setText(noticeList.get(position).getNotice());
         dateText.setText(noticeList.get(position).getDate());
         pointSize.setText(noticeList.get(position).getSize());
 
-        v.setTag(noticeList.get(position).getNotice());
         return v;
     }
 }

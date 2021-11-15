@@ -1,22 +1,12 @@
 package com.example.coffee_bin;
 
 public class Notice {
-    String notice;
     String size;
     String date;
 
-    public Notice(String notice, String size, String date) {
-        this.notice = notice;
+    public Notice(String size, String date) {
         this.size = size;
         this.date = date;
-    }
-
-    public String getNotice() {
-        return notice;
-    }
-
-    public void setNotice(String notice) {
-        this.notice = notice;
     }
 
     public String getSize() {

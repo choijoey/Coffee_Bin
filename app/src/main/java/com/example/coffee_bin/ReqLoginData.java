@@ -4,16 +4,16 @@ import androidx.annotation.NonNull;
 
 public class ReqLoginData {
     String phoneNum;
-    String serialNum;
+    String email;
 
-    public ReqLoginData( String phoneNum,String serialNum) {
+    public ReqLoginData( String phoneNum,String email) {
         this.phoneNum = phoneNum;
-        this.serialNum = serialNum;
+        this.email = email;
     }
 
     @Override
     public String toString() {
-            return "[ReqLoginData] =" + phoneNum+" "+serialNum ;
+            return "[ReqLoginData] =" + phoneNum+" "+email ;
 
     }
 

@@ -8,13 +8,12 @@ import androidx.annotation.NonNull;
 public class ResLoginData {
 
     @Expose
-    String phoneNum;
-    String serialNum;
+    String token;
 
 
     @NonNull
     @Override
     public String toString() {
-        return "[ResLoginData] =" + phoneNum+" "+serialNum ;}
+        return token;}
 }
 

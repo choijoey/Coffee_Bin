@@ -27,12 +27,22 @@ public class Frag1 extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,  Bundle savedInstanceState) {
        view=inflater.inflate(R.layout.frag1,container,false);
+
         String[] ListviewTitle = new String[]{
-                "쓰레기통1","쓰레기통2","쓰레기통3"
+                "99","20","66"
         };
         String[] ListviewDescription = new String[]{
-                "20","49","99"
+                "99","20","66"
         };
+        Bundle bundle=getArguments();
+        if(bundle!= null){
+            ListviewTitle = getArguments().getStringArray("name");
+            ListviewDescription = getArguments().getStringArray("plastic_amount");
+        }
+
+
+
+
         int[] ListviewImages= new int[]{
                 R.drawable.plastic_volume1,R.drawable.plastic_volume2,R.drawable.plastic_volume3
         };
@@ -52,9 +62,9 @@ public class Frag1 extends Fragment{
             HashMap<String,String> hm = new HashMap<String,String>();
             hm.put("ListTitle",ListviewTitle[x]);
             hm.put("ListDescription",ListviewDescription[x]);
-            if(Integer.parseInt(ListviewDescription[x])<25){
+            if(Integer.parseInt(ListviewDescription[x])<20){
                 hm.put("ListImages",Integer.toString(ListviewImages[0]));
-            }else if(Integer.parseInt(ListviewDescription[x])<50){
+            }else if(Integer.parseInt(ListviewDescription[x])<40){
                 hm.put("ListImages",Integer.toString(ListviewImages[1]));
             }
             else{

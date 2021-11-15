@@ -5,16 +5,17 @@
     <item
         android:id="@+id/item1"
         android:icon="@drawable/recycle_icon_1"
-        android:title="쓰레기통1"
-        app:showAsAction="never|ifRoom" />
+        android:title="쓰레기통1" />
     <item
         android:id="@+id/item2"
         android:icon="@drawable/recycle_icon_2"
-        android:title="쓰레기통2"
-        app:showAsAction="never|ifRoom" />
+        android:title="쓰레기통2" />
     <item
         android:id="@+id/item3"
         android:icon="@drawable/recycle_icon_3"
-        android:title="쓰레기통3"
-        app:showAsAction="never|ifRoom" />
+        android:title="쓰레기통3" />
+    <item
+        android:id="@+id/item4"
+        android:icon="@drawable/ic_baseline_emoji_people_24"
+        android:title="사용자" />
 </menu>
