@@ -73,7 +73,7 @@ public class PointCheckActivity extends AppCompatActivity {
                     String y = resPointData.getDate();
                     cur_point = resPointData.getCurPoint();
 
-                    String si="+"+x;
+                    String si="+"+x+"        / 잔여 포인트: "+ cur_point.toString();
                     noticeList.add(new Notice(y,si));
 
                 }
