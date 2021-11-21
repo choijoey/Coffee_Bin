@@ -54,14 +54,16 @@ public class Frag2 extends Fragment {
         for (int x=0;x<3;x++){
             HashMap<String,String> hm = new HashMap<String,String>();
             hm.put("ListTitle",ListviewTitle[x]);
-            hm.put("ListDescription",Integer.toString((50-Integer.parseInt(ListviewDescription[x]))*2)+"%");
-            if(Integer.parseInt(ListviewDescription[x])<20){
-                hm.put("ListImages",Integer.toString(ListviewImages[2]));
-            }else if(Integer.parseInt(ListviewDescription[x])<40){
+            hm.put("ListTitle",ListviewTitle[x]);
+            hm.put("ListDescription",Integer.toString((int)(((35.0-Double.parseDouble(ListviewDescription[x]))/35)*100))+"%");
+
+            if(((int)(((35.0-Double.parseDouble(ListviewDescription[x]))/35)*100))<33){
+                hm.put("ListImages",Integer.toString(ListviewImages[0]));
+            }else if(((int)(((35.0-Double.parseDouble(ListviewDescription[x]))/35)*100))<66){
                 hm.put("ListImages",Integer.toString(ListviewImages[1]));
             }
             else{
-                hm.put("ListImages",Integer.toString(ListviewImages[0]));
+                hm.put("ListImages",Integer.toString(ListviewImages[2]));
             }
             aList.add(hm);
 

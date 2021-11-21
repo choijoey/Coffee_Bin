@@ -47,7 +47,7 @@ public class KakaoLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kakao_login);
-
+        getHashKey();
         //액션바 숨기기
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
